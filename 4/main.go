@@ -42,7 +42,6 @@ func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 			rs++
 			flagAdd = false
 		}
-		fmt.Println("rs=", rs)
 		if rs < 10 {
 			tempNode.Val = rs
 		} else {
@@ -51,8 +50,17 @@ func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 		}
 		l1 = l1.Next
 		l2 = l2.Next
-		if l1 == nil || l2 == nil {
+		if l1 == nil && l2 == nil {
+			if flagAdd {
+				tempNode.Next = &ListNode{Val: 1}
+			}
 			break
+		}
+		if l1 == nil {
+			l1 = &ListNode{}
+		}
+		if l2 == nil {
+			l2 = &ListNode{}
 		}
 		tempNode.Next = &ListNode{}
 		tempNode = tempNode.Next
@@ -61,13 +69,10 @@ func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 
 }
 func main() {
-	l1 := &ListNode{Val: 2}
-	l1.Next = &ListNode{Val: 4}
-	l1.Next.Next = &ListNode{Val: 3}
+	l1 := &ListNode{Val: 1}
+	l1.Next = &ListNode{Val: 8}
 
-	l2 := &ListNode{Val: 5}
-	l2.Next = &ListNode{Val: 6}
-	l2.Next.Next = &ListNode{Val: 4}
+	l2 := &ListNode{Val: 9}
 
 	sum := addTwoNumbers(l1, l2)
 	sum.Print()
