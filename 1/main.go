@@ -17,7 +17,6 @@ func twoSum(nums []int, target int) []int {
 	var res []int
 	for i := 0; i < len(nums); i++ {
 		for j := i + 1; j < len(nums); j++ {
-			fmt.Println(i, j)
 			if nums[i]+nums[j] == target {
 				res = append(res, i, j)
 				return res
@@ -26,9 +25,10 @@ func twoSum(nums []int, target int) []int {
 	}
 	return res
 }
+
 func main() {
-	tdata := []int{2, 7, 11, 15}
-	if i := twoSum(tdata, 14); i != nil {
+	tdata := []int{3, 2, 4}
+	if i := twoSum(tdata, 6); i != nil {
 		fmt.Println(i)
 	} else {
 		fmt.Println("nil")
