@@ -21,13 +21,20 @@ func (nt *NodeTree) SetValue(value int) {
 	nt.Value = value
 }
 func (nt *NodeTree) Traverse() {
+	nt.TraverseFun(func(node *NodeTree) {
+		node.Print()
+	})
+
+}
+
+func (nt *NodeTree) TraverseFun(f func(*NodeTree)) {
 	if nt == nil {
 		return
 	}
+	nt.Left.TraverseFun(f)
+	f(nt)
+	nt.Right.TraverseFun(f)
 
-	nt.Print()
-	nt.Left.Traverse()
-	nt.Right.Traverse()
 }
 func main() {
 
@@ -39,4 +46,10 @@ func main() {
 	root.Right.Left.SetValue(4)
 
 	root.Traverse()
+
+	nodeCount := 0
+	root.TraverseFun(func(*NodeTree) {
+		nodeCount++
+	})
+	fmt.Println("Node count:", nodeCount)
 }
