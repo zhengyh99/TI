@@ -45,9 +45,23 @@ func longestPalindrome(s string) string {
 		// 	}
 		// }
 
-		// if s[i]==s[i+1] and i+1<len(s){
-
-		// }
+		if i+1 < len(s) && s[i] == s[i+1] {
+			for n := i + 2; n < len(s)-i-2; n++ {
+				if s[i] == s[i+n] {
+					tmpMax := n - 1
+					if tmpMax > maxLen {
+						fmt.Println("tmpmax555:", tmpMax, "i:", i, "n:", n, "max:", maxLen)
+						start = i
+						end = i + n
+						maxLen = tmpMax
+						fmt.Println("55555end:", end, "start:", start)
+					}
+					continue
+				} else {
+					break
+				}
+			}
+		}
 
 		for k := 1; k <= minLen; k++ {
 
@@ -71,7 +85,7 @@ func longestPalindrome(s string) string {
 	return s[start : end+1]
 }
 func main() {
-	s := longestPalindrome("aabaaaas")
+	s := longestPalindrome("aabaaaaaas")
 	fmt.Printf("type: %T,[%v]", s, s)
 }
 
