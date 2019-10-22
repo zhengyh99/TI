@@ -1,9 +1,21 @@
 package main
 
+// 给定一个字符串 s，找到 s 中最长的回文子串。你可以假设 s 的最大长度为 1000。
+
+// 示例 1：
+
+// 输入: "babad"
+// 输出: "bab"
+// 注意: "aba" 也是一个有效答案。
+// 示例 2：
+
+// 输入: "cbbd"
+// 输出: "bb"
+
 import "fmt"
 
 func longestPalindrome(s string) string {
-	if len(s) <= 1 {
+	if len(s) < 2 || (len(s) == 2 && s[1] == s[0]) {
 		return s
 	}
 	var tmpMax, maxLen, start, end, minLen int
@@ -13,48 +25,20 @@ func longestPalindrome(s string) string {
 		} else {
 			minLen = i - 0
 		}
-		// for j := i + 1; j < len(s); j++ {
-		// 	if s[i] == s[j] {
-		// 		t := 0
-		// 		if j-0 > len(s)-j-1 {
-		// 			minLen2 = len(s) - i - 1
-		// 		} else {
-		// 			minLen2 = j - 0
-		// 		}
-		// 		for n := j + 1; n < minLen2; n++ {
+		if i+1 < len(s) && s[i] == s[i+1] { //偶对齐
 
-		// 			if s[i-n] == s[j+n] {
-		// 				t = n
-		// 			} else {
-		// 				break
-		// 			}
-		// 		}
-
-		// 		tmpMax = 2*t + j - i
-		// 		if tmpMax > maxLen {
-		// 			fmt.Println("wwwwwtmpmax:", tmpMax)
-		// 			start = i - t
-		// 			end = j + t
-		// 			fmt.Println("111end:", end, "start:", start)
-		// 			maxLen = tmpMax
-		// 		}
-
-		// 	} else {
-
-		// 		break
-		// 	}
-		// }
-
-		if i+1 < len(s) && s[i] == s[i+1] {
-			for n := i + 2; n < len(s)-i-2; n++ {
-				if s[i] == s[i+n] {
-					tmpMax := n - 1
-					if tmpMax > maxLen {
-						fmt.Println("tmpmax555:", tmpMax, "i:", i, "n:", n, "max:", maxLen)
-						start = i
-						end = i + n
+			if 2 >= maxLen {
+				start = i
+				end = i + 1
+				maxLen = 2
+			}
+			for n := 1; n <= minLen; n++ {
+				if i+1+n < len(s) && s[i-n] == s[i+1+n] {
+					tmpMax = 2*n + 2
+					if tmpMax >= maxLen {
+						start = i - n
+						end = i + 1 + n
 						maxLen = tmpMax
-						fmt.Println("55555end:", end, "start:", start)
 					}
 					continue
 				} else {
@@ -63,29 +47,30 @@ func longestPalindrome(s string) string {
 			}
 		}
 
-		for k := 1; k <= minLen; k++ {
-
-			if s[i+k] == s[i-k] && i >= 2 {
-				tmpMax = 2*k - 1
-				if tmpMax > maxLen {
-					fmt.Println("tmpmax:", tmpMax, "i:", i, "k:", k, "max:", maxLen)
+		for k := 1; k <= minLen; k++ { //奇对齐
+			if s[i+k] == s[i-k] && i > 0 {
+				tmpMax = 2*k + 1
+				if tmpMax >= maxLen {
 					start = i - k
 					end = i + k
 					maxLen = tmpMax
-					fmt.Println("22222end:", end, "start:", start)
 				}
 				continue
 			} else {
 
 				break
 			}
+
 		}
 
 	}
+
 	return s[start : end+1]
 }
 func main() {
-	s := longestPalindrome("aabaaaaaas")
+	tString := "aaa"
+	fmt.Println(tString)
+	s := longestPalindrome(tString)
 	fmt.Printf("type: %T,[%v]", s, s)
 }
 
