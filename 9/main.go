@@ -1,32 +1,35 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 func convert(s string, numRows int) string {
 	b := []byte(s)
-	tmp := make([][]byte, len(b))
+	tmp := make([][]byte, numRows)
 	var n, rowN, col int
 	for i := 0; i < len(b); i++ {
-		if col%numRows == 0 {
-			fmt.Println("bi=", string(b[i]), "i=", i, "col=", col, "n=", n)
-			tmp[col] = append(tmp[col], b[i])
+		if col%(numRows-1) == 0 {
+
+			tmp[n%numRows] = append(tmp[n%numRows], b[i])
 			n++
 			if n%numRows == 0 {
 				col++
 			}
 
 		} else {
-			rowN = col % numRows
-			fmt.Println("rowN", rowN)
+			rowN = col % (numRows - 1)
 			for j := 0; j < numRows; j++ {
-				if j == rowN {
+				if j == numRows-rowN-1 {
 
-					tmp[col] = append(tmp[col], b[i])
+					tmp[j] = append(tmp[j], b[i])
 
-				} else {
-
-					tmp[col] = append(tmp[col], byte(32))
 				}
+				// else {
+
+				// 	tmp[j] = append(tmp[j], byte(32))
+				// }
 
 				n++
 
@@ -35,13 +38,18 @@ func convert(s string, numRows int) string {
 		}
 
 	}
-	fmt.Println(tmp)
-	return ""
+	str := make([]string, numRows)
+	for key, val := range tmp {
+
+		str[key] = string(val)
+
+	}
+	return strings.Join(str, "")
 }
 
 func main() {
-	s := "PAYPALIKFG"
-	r := convert(s, 3)
+	s := "A"
+	r := convert(s, 1)
 	fmt.Println(r)
 
 }
