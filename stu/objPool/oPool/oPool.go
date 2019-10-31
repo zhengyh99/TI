@@ -10,11 +10,10 @@ type Object struct {
 
 type Opool struct {
 	BufferChan chan *Object
-	timeOut    time.Duration
 }
 
 func GetPool(num int) (op *Opool) {
-
+	op = new(Opool)
 	op.BufferChan = make(chan *Object, num)
 	for i := 0; i < num; i++ {
 		op.BufferChan <- &Object{}
@@ -26,7 +25,7 @@ func (op *Opool) GetObject() (o *Object, err error) {
 	select {
 	case o = <-op.BufferChan:
 		return
-	case <-time.After(op.timeOut):
+	case <-time.After(time.Second * 10):
 		return nil, errors.New("请求超时")
 	}
 }
