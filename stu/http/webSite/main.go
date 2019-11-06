@@ -1,7 +1,7 @@
 package main
 
 import (
-	_ "controler"
+	_ "TI/stu/http/webSite/src/controler"
 	"net/http"
 )
 

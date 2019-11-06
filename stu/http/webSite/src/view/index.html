@@ -1,14 +1,69 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-    <script type="text/javascript" src="/static/js/index.js"></script>
-</head>
+{{define "index"}}
+{{template "header"}}
 <body>
     <h1>I Love LJX</h1>
     <h1>this is my go web site</h1>
+    <h3>当前时间：{{.ctime.Format "2006年01年02日 15:04:05"}}</h3>
     <button onclick="showme()">show me</button>
+    <table>
+        <tr>
+            <td>用户名:</td>
+            <td>{{.user.Username}}</td>
+        </tr>
+        <tr>
+            <td>年龄:</td>
+            <td>{{.user.Age}}</td>
+        </tr>
+        <tr>
+            <td>密码:</td>
+            <td>{{.user.Password}}</td>
+        </tr>
+        <tr>
+            <td>余额:</td>
+            <td>{{.balance}}</td>
+        </tr>
+        <tr>
+            <td>到期时间:</td>
+            <td>{{timeFormat .exTime}}</td>
+        </tr>
+        <tr>
+            <td>是否到期:</td>
+            <td>
+                {{if gt .exTime.Unix .ctime.Unix}}
+                    否
+                {{else}}
+                    是
+                {{end}}
+            </td>
+        </tr>
+        <tr>
+            <td>是否可用:</td>
+            <td>
+                {{if lt .exTime.Unix .ctime.Unix}}
+                    否
+                {{else}}
+                    是
+                {{end}}
+            </td>
+        </tr>
+        <tr>
+            <td>爱好</td>
+            <td>
+                {{range .user.Hobby}}
+                    {{.}}
+                {{end}}
+            </td>
+        </tr>
+    </table>
+    <div>
+
+        <form action="upload" method="POST" enctype="multipart/form-data">
+        图片名称：<input type="text" name="pname"><br>
+        <input type="file" name="pimg"><br>
+        <input type="submit">
+        </form>
+    </div>
     
 </body>
-</html>
+{{template "footer"}}
+{{end}}
