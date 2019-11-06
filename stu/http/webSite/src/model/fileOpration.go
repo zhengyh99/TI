@@ -27,3 +27,19 @@ func Upload(rw http.ResponseWriter, req *http.Request) {
 	tp.Execute(rw, fileName)
 
 }
+
+func Download(rw http.ResponseWriter, req *http.Request) {
+	fmt.Println("Downlaod starting...")
+	filename := req.FormValue("filename")
+	readfile, err := ioutil.ReadFile("TI/stu/http/webSite/src/view/" + filename)
+	if err != nil {
+		fmt.Println("ioutil readfile error:", err)
+	}
+	rwHeader := rw.Header()
+	rwHeader.Set("Content_Type", "application/octet-stream")
+	rwHeader.Set("Content-Disposition", "attchement;filename="+filename)
+	n, err := rw.Write(readfile)
+	if n <= 0 || err != nil {
+		fmt.Println("文件下载失败")
+	}
+}
