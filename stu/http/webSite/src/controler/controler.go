@@ -10,4 +10,5 @@ func init() {
 	http.HandleFunc("/", model.IndexFunc)
 	http.HandleFunc("/upload", model.Upload)
 	http.HandleFunc("/download", model.Download)
+	http.HandleFunc("/userlist",model.UserList)
 }
