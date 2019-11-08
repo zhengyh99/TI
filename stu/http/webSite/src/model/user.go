@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+
+	"github.com/gorilla/mux"
 )
 
 type User struct {
@@ -29,4 +31,9 @@ func UserList(rw http.ResponseWriter, req *http.Request) {
 	rw.Header().Set("Content-Type", "application/json;charset=uft-8")
 	rw.Write(ul)
 
+}
+
+func GetName(rw http.ResponseWriter, req *http.Request) {
+	vars := mux.Vars(req)
+	rw.Write([]byte("用户名：" + vars["uname"]))
 }
